@@ -87,7 +87,7 @@
                 var obj = JSON.parse(this.responseText);
                 console.log(obj.Plot);
                 document.getElementById('plot').innerText = obj.Plot;
-
+                document.getElementById('outputArea').innerText = "'"+ obj.Plot +"'" + "     |    Generating, please wait..."
                 document.getElementById('aiTitle').innerText="An AI written story about " + obj.Title;
                 generateStory();
             }
@@ -96,7 +96,7 @@
 
     function generateStory(){
         var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("GET", "https://gpt2-default-dstdu4u23a-uc.a.run.app/?length=200&temperature=0.5&prefix=" + document.getElementById('plot').value, true);
+        xmlhttp.open("GET", "https://gpt2-default-dstdu4u23a-uc.a.run.app/?top_k=40&length=100&temperature=1&prefix=" + document.getElementById('plot').value, true);
         xmlhttp.send();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
