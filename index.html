@@ -1,105 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>PlotGuesserAI</title>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
-  </script>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
+        </script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
     <link href="main.css" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/png" href="fav.png" />
 </head>
+
 <body>
-    
+
     <div class="site-wrapper">
 
-      <div class="site-wrapper-inner">
+        <div class="site-wrapper-inner">
 
-        <div class="container">
+            <div class="container">
 
-          <div class="masthead clearfix">
-            <div class="container inner">
-              <h3 class="masthead-brand">PlotGuesser AI</h3>
-            </div>
-          </div>
-
-          <div class="inner cover" id="intro">
-            <h1 class="cover-heading">Generate an alternate story</h1>
-            <p class="lead">Give the AI a movie title and watch it generate a story based on the movie's description.</p>
-            <p class="lead">
-                <div class="inner cover">
-                    <form>
-                        <div class="form-group">
-                        <input id="movieTitle" class="form-control" type="text" placeholder="Movie Title">
-                        </div>
-                        <div class="form-check">
-                            <a href="#" class="btn btn-lg btn-default" onclick="generate()">Try it out</a>
-                        </div>
-                    </form>
-                </div>
-            </p>
-          </div>
-
-          <div class="inner cover" id="aiGenerator">
-                <br><br><br><br>
-                <h2 class="cover-heading" id="aiTitle"></h1>
-                <p class="lead">
-                    <div class="inner cover">
-                        <div class="form-group purple-border">
-                            <textarea class="form-control" id="outputArea" rows="10">Generating, please wait...</textarea>
-                            <div class="form-check">
-                                <br>
-                                <a href="#" class="btn btn-lg btn-default" onclick="window.location.reload(false);">Go again!</a>
-                            </div>
-                            <textarea class="form-control" id="plot" rows="10" style="visibility: hidden;"></textarea>
-                            
-                        </div>
-                        
+                <div class="masthead clearfix">
+                    <div class="container inner">
+                        <img class="masthead-brand" src="fav.png" style="height: 2.3em;">
+                        <h3 class="masthead-brand">PlotGuesser AI</h3>
                     </div>
-                </p>
-              </div>
+                </div>
 
+                <div class="inner cover" id="intro">
+                    <h1 class="cover-heading">Generate an alternate story</h1>
+                    <p class="lead">Give the AI a movie title and watch it generate a story based on the movie's
+                        plot.</p>
+                    <p class="lead">
+                    <div class="inner cover">
+
+                        <form action="#" onsubmit="generate();return false;">
+                            <div class="form-group">
+                                <input id="movieTitle" class="form-control" type="text" placeholder="Movie Title">
+                            </div>
+                            <div class="form-check">
+
+                                <input type="submit" class="btn btn-lg btn-default" onclick="generate()"
+                                    value="Try it out">
+                            </div>
+                        </form>
+                    </div>
+                    </p>
+                </div>
+
+
+                <div class="inner cover" id="aiGenerator">
+                    <br><br><br><br>
+                    <h2 class="cover-heading" id="aiTitle">
+                        </h1>
+                        <p class="lead">
+                        <div class="inner cover">
+                            <div class="form-group purple-border">
+                                <textarea readonly style="resize: none;" class="form-control" id="prompt"
+                                    rows="3">Prompt text</textarea>
+                                <br>
+                                <textarea class="form-control" id="outputArea"
+                                    rows="10">Generating, please wait...</textarea>
+                                <div class="form-check">
+                                    <br>
+                                    <a href="#" class="btn btn-lg btn-default"
+                                        onclick="window.location.reload(false);">Go again!</a>
+                                </div>
+                                <textarea class="form-control" id="plot" rows="10"
+                                    style="visibility: hidden;"></textarea>
+
+                            </div>
+
+                        </div>
+                        </p>
+                        <br>
+                        <br>
+                        <span class="loader" id="load" style="visibility: hidden;"><span
+                                class="loader-inner"></span></span>
+                </div>
+
+
+
+                <div class="alert alert-danger" role="alert" id="movieError" style="visibility: hidden;">
+                    Movie was not found! Try another film.
+                </div>
+
+
+            </div>
 
         </div>
 
-      </div>
+    </div>
 
-    </div>  
 </body>
 
 
 
 <script>
-    document.getElementById('aiGenerator').style.display='none';
-    document.getElementById('intro').style.visibility='visible';
+    document.getElementById('aiGenerator').style.display = 'none';
+    document.getElementById('intro').style.visibility = 'visible';
 
-    function generate(){
+    function generate() {
         var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("GET", "http://www.omdbapi.com/?t=%22"+ document.getElementById('movieTitle').value + "%22&apikey=f53a12f", true);
+        xmlhttp.open("GET", "https://www.omdbapi.com/?t=%22" + document.getElementById('movieTitle').value + "%22&apikey=f53a12f", true);
         xmlhttp.send();
-        xmlhttp.onreadystatechange = function() {
+        xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById('intro').style.display='none';
-                document.getElementById('aiGenerator').style.display='block';
                 var obj = JSON.parse(this.responseText);
                 console.log(obj.Plot);
-                document.getElementById('plot').innerText = obj.Plot;
-                document.getElementById('outputArea').innerText = "'"+ obj.Plot +"'" + "     |    Generating, please wait..."
-                document.getElementById('aiTitle').innerText="An AI written story about " + obj.Title;
-                generateStory();
+                if (obj.Plot == null) {
+                    document.getElementById('movieError').style.visibility = "visible";
+                } else {
+                    document.getElementById('movieError').style.visibility = "hidden";
+                    document.getElementById('load').style.visibility = "visible";
+
+                    document.getElementById('intro').style.display = 'none';
+                    document.getElementById('aiGenerator').style.display = 'block';
+                    console.log(obj.Plot);
+                    document.getElementById('plot').innerText = obj.Plot;
+                    document.getElementById('prompt').innerText = "Prompt: '" + obj.Plot + "'"
+                    document.getElementById('outputArea').innerText = "Generating story, please wait..."
+                    document.getElementById('aiTitle').innerText = "An AI written story about " + obj.Title;
+                    generateStory();
+                }
             }
         };
     }
 
-    function generateStory(){
+
+    function generateStory() {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.open("GET", "https://gpt2-default-dstdu4u23a-uc.a.run.app/?top_k=40&length=100&temperature=1&prefix=" + document.getElementById('plot').value, true);
         xmlhttp.send();
-        xmlhttp.onreadystatechange = function() {
+        xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
+                document.getElementById('load').style.visibility = "hidden";
                 var obj = JSON.parse(this.responseText);
                 console.log(obj);
                 document.getElementById('outputArea').innerText = obj.text
@@ -107,9 +148,9 @@
         };
     }
 
-    
 
-    
+
+
 
 </script>
 
